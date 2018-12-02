@@ -1,6 +1,4 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
  *
  * @format
  * @flow
@@ -14,7 +12,7 @@ import PlaceList from "./src/components/PlaceList/PlaceList.js";
 
 
 type Props = {};
-type State = { places: Array<string>};
+type State = { places: Array<Object>};
 export default class App extends Component<Props, State> {
   state = {
     places: []
@@ -23,16 +21,19 @@ export default class App extends Component<Props, State> {
   placeAddedHandler = (placeName: string) => {
     this.setState(prevState => {
         return {
-            places: prevState.places.concat(placeName)
+            places: prevState.places.concat({
+              key: String(Math.random()),
+              value: placeName
+            })
         };
       });
   };
 
-  placeDeletedHandler = (index : number) => {
+  placeDeletedHandler = (key : string) => {
     this.setState(prevState => {
         return {
-          places: prevState.places.filter((place, i) => {
-              return i !== index;
+          places: prevState.places.filter(place => {
+              return place.key !== key;
             })
         };
       });
