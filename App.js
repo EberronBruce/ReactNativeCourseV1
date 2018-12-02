@@ -24,7 +24,9 @@ export default class App extends Component<Props, State> {
             places: prevState.places.concat({
               key: String(Math.random()),
               name: placeName,
-              image: placeImage
+              image: {
+                uri: "https://cdn.newsapi.com.au/image/v1/f08d8ccc83fbc2d08529aea69890ad4d?width=1024"
+              }
             })
         };
       });
