@@ -9,7 +9,7 @@ import {Platform, StyleSheet, View } from 'react-native';
 
 import PlaceInput from "./src/components/PlaceInput/PlaceInput.js";
 import PlaceList from "./src/components/PlaceList/PlaceList.js";
-
+import placeImage from "./src/assets/beautiful-place.jpg"
 
 type Props = {};
 type State = { places: Array<Object>};
@@ -23,7 +23,8 @@ export default class App extends Component<Props, State> {
         return {
             places: prevState.places.concat({
               key: String(Math.random()),
-              value: placeName
+              name: placeName,
+              image: placeImage
             })
         };
       });
