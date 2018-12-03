@@ -5,7 +5,7 @@ import { StyleSheet, FlatList } from 'react-native';
 
 import ListItem from '../ListItem/ListItem';
 
-type Props = {places: Array<Object>, onItemDeleted: Function};
+type Props = {places: Array<Object>, onItemSelected: Function};
 
 const placeList = (props : Props) => {
 
@@ -17,7 +17,7 @@ const placeList = (props : Props) => {
             <ListItem
               placeName={info.item.name}
               placeImage={info.item.image}
-              onItemPressed={() => props.onItemDeleted(info.item.key)}
+              onItemPressed={() => props.onItemSelected(info.item.key)}
             />
           )}
         />
