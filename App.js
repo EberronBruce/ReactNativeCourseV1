@@ -44,7 +44,7 @@ export default class App extends Component<Props, State> {
     this.setState(prevState => {
         return {
           places: prevState.places.filter(place => {
-              return place.key !== prevState.selectedPlace.key;
+              return prevState.selectedPlace && place.key !== prevState.selectedPlace.key;
             }),
             selectedPlace: null
         };
