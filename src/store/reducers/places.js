@@ -16,7 +16,7 @@ const initialState = {
 }
 
 
-const reducer = (state : State = initialState, action : Action) => {
+const reducer = (state : State = initialState, action : Action) : State => {
 
   switch (action.type) {
     case ADD_PLACE:

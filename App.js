@@ -43,6 +43,7 @@ type State = {
  class App extends Component<Props, State> {
   placeAddedHandler = (placeName: string) => {
     this.props.onAddPlace(placeName);
+    console.log('Place Added');
   };
 
   placeDeletedHandler = () => {
