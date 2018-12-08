@@ -1,18 +1,27 @@
 // @flow
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
 
-type Props = {};
+import PlaceList from '../../components/PlaceList/PlaceList.js'
+
+type Props = {places: Array<Object>};
 type State = {};
 
 class FindPlaceScreen extends Component<Props, State> {
   render() {
     return (
       <View>
-        <Text>On FindPlaceScreen</Text>
+        <PlaceList places={this.props.places}/>
       </View>
     );
   }
 }
 
-export default FindPlaceScreen;
+const mapStateToProps = state => {
+  return {
+    places: state.places.places
+  };
+};
+
+export default connect(mapStateToProps)(FindPlaceScreen);

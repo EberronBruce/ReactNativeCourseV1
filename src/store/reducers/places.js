@@ -1,18 +1,13 @@
 /* @flow */
-import { ADD_PLACE, DELETE_PLACE, SELECT_PLACE, DESELECT_PLACE } from '../actions/actionTypes.js'
+import { ADD_PLACE, DELETE_PLACE } from '../actions/actionTypes.js'
 
 type State = {
-  places: Array<Object>,
-  selectedPlace: ?{
-  key: string,
-  name: string,
-  image: Image
-}};
+  places: Array<Object>
+};
 type Action = { type : string, placeName: string, placeKey: string};
 
 const initialState = {
-  places: [],
-  selectedPlace: null
+  places: []
 }
 
 
@@ -35,21 +30,9 @@ const reducer = (state : State = initialState, action : Action) : State => {
         ...state,
         places: state.places.filter(place => {
             return state.selectedPlace && place.key !== state.selectedPlace.key;
-          }),
-          selectedPlace: null
+          })
       };
-      case SELECT_PLACE:
-      return {
-        ...state,
-        selectedPlace: state.places.find(place => {
-          return place.key === action.placeKey;
-        })
-      };
-      case DESELECT_PLACE:
-      return {
-        ...state,
-        selectedPlace: null
-      };
+
     default:
       return state;
   }

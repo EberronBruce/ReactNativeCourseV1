@@ -1,3 +1,3 @@
 /* @flow */
 
-export { addPlace, deletePlace, selectPlace, deselectPlace } from './places.js';
+export { addPlace, deletePlace } from './places.js';
