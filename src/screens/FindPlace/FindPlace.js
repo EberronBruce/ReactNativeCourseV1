@@ -14,6 +14,21 @@ type Props = {places: Array<Place>, navigator: Object};
 type State = {};
 
 class FindPlaceScreen extends Component<Props, State> {
+  constructor(props) {
+    super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+  }
+
+  onNavigatorEvent = (event) => {
+    if (event.type == "NavBarButtonPress") {
+      if (event.id === "sideDrawerToggle") {
+        this.props.navigator.toggleDrawer({
+            side: "left"
+          });
+      }
+    }
+  }
+
   itemSelectedHandler = (key) => {
     const selPlace =  this.props.places.find(place => {
       return place.key === key;
