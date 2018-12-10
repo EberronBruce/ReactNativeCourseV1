@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import startMainTabs from "../MainTabs/startMainTabs.js";
 import DefaultInput from "../../components/UI/DefaultInput/DefaultInput.js";
+import HeadingText from "../../components/UI/HeadingText/HeadingText.js";
+import MainText from "../../components/UI/MainText/MainText.js";
 
 type State = {};
 type Props = {};
@@ -21,8 +23,10 @@ class AuthScreen extends Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Please Login In</Text>
-        <Button title="Switch to Login" />
+        <MainText>
+          <HeadingText style={styles.heading}>Please Login In</HeadingText>
+        </MainText>
+        <Button title="Switch to Login" onPress={this.loginHandler}/>
         <View style={styles.inputContainer}>
           <DefaultInput placeholder="Your E-Mail Address" style={styles.input}/>
           <DefaultInput placeholder="Password" style={styles.input}/>
@@ -47,6 +51,8 @@ const styles = StyleSheet.create({
     input: {
       backgroundColor: "#eee",
       borderColor: "#bbb"
+    },
+    heading: {
     }
   });
 
