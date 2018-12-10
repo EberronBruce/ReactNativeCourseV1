@@ -2,11 +2,13 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 
-const defaultInput = props => (
+type Props = { style: Object};
+
+const defaultInput = (props: Props) => (
     <TextInput
-      style={styles.input}
       underlineColorAndroid="transparent"
       {...props}
+      style={[styles.input, props.style]}
     />
 );
 
