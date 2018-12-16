@@ -5,34 +5,18 @@ import { View, TextInput, Button, StyleSheet } from "react-native";
 
 import DefaultInput from "../UI/DefaultInput/DefaultInput.js";
 
-type State = { placeName: string };
-type Props = {};
+type State = {  };
+type Props = {placeName: string, onChangeText: Function};
 
-class PlaceInput extends Component<Props, State> {
-  state = {
-    placeName: ""
-  };
+const placeInput = (props: Props) =>  (
+  <DefaultInput
+    placeholder="Place Name"
+    value={props.placeName}
+    onChangeText={props.onChangeText}
+    style={styles.input}
+  />
+);
 
-  placeNameChangedHandler = (val : string) => {
-    this.setState({
-      placeName: val
-    });
-  };
-
-
-  render() {
-    return (
-        <DefaultInput
-          placeholder="Place Name"
-          value={this.state.placeName}
-          onChangeText={this.placeNameChangedHandler}
-          style={styles.input}
-        />
-    );
-  }
-
-
-}
 
 const styles = StyleSheet.create({
   input: {
@@ -42,4 +26,4 @@ const styles = StyleSheet.create({
 
 
 
-export default PlaceInput;
+export default placeInput;
