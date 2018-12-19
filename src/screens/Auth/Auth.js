@@ -16,10 +16,40 @@ import MainText from "../../components/UI/MainText/MainText.js";
 import ButtonWithBackground from "../../components/UI/ButtonWithBackground/ButtonWithBackground.js"
 import backgroundImage from "../../assets/background.jpg"
 
-type State = {};
+type State = {
+  respStyles: {
+    pwContainerDirection: string,
+    pwContainerJustifyContent: string,
+    pwWrapperWidth: string
+  }
+};
 type Props = {};
 
 class AuthScreen extends Component<Props, State> {
+  state = {
+    respStyles: {
+      pwContainerDirection: "column",
+      pwContainerJustifyContent: "flex-start",
+      pwWrapperWidth: "100%"
+    }
+  }
+
+  constructor(props : Props) {
+    super(props);
+    Dimensions.addEventListener( "change", (dims) => {
+      this.setState({
+        respStyles: {
+          pwContainerDirection:
+            Dimensions.get('window').height > 500 ? "column" : "row",
+          pwContainerJustifyContent:
+            Dimensions.get('window').height > 500 ? "flex-start" : "space-between",
+          pwWrapperWidth:
+            Dimensions.get('window').height > 500 ? "100%" : "45%"
+        }
+      })
+    });
+  }
+
   loginHandler = () => {
     startMainTabs();
   }
@@ -46,11 +76,24 @@ class AuthScreen extends Component<Props, State> {
                 placeholder="Your E-Mail Address"
                 style={styles.input}
               />
-              <View style={styles.passwordContainer}>
-                <View style={styles.passwordWrapper}>
+              <View
+                style={{
+                  flexDirection: this.state.respStyles.pwContainerDirection,
+                  justifyContent: this.state.respStyles.pwContainerJustifyContent
+                }}
+              >
+                <View
+                  style={{
+                    width: this.state.respStyles.pwWrapperWidth
+                  }}
+                >
                   <DefaultInput placeholder="Password" style={styles.input}/>
                 </View>
-                <View style={styles.passwordWrapper}>
+                <View
+                  style={{
+                    width: this.state.respStyles.pwWrapperWidth
+                  }}
+                >
                   <DefaultInput placeholder="Confirm Password" style={styles.input}/>
                 </View>
               </View>
@@ -90,7 +133,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between'
     },
     passwordWrapper: {
-      width: Dimensions.get('window').height > 500 ? "100%" : "45%" 
+      width: Dimensions.get('window').height > 500 ? "100%" : "45%"
     }
   });
 
