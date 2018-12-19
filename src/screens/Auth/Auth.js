@@ -6,7 +6,8 @@ import {
   Button,
   StyleSheet,
   TextInput,
-  ImageBackground
+  ImageBackground,
+  Dimensions
 } from 'react-native';
 import startMainTabs from "../MainTabs/startMainTabs.js";
 import DefaultInput from "../../components/UI/DefaultInput/DefaultInput.js";
@@ -24,19 +25,35 @@ class AuthScreen extends Component<Props, State> {
   }
 
   render() {
+    let headingText = null;
+
+    if (Dimensions.get('window').height > 500) {
+      headingText = (
+        <MainText>
+          <HeadingText style={styles.heading}>Please Login In</HeadingText>
+        </MainText>
+      );
+    }
     return (
         <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
           <View style={styles.container}>
-            <MainText>
-              <HeadingText style={styles.heading}>Please Login In</HeadingText>
-            </MainText>
+            {headingText}
             <ButtonWithBackground color="#29aaf4" onPress={() => alert("Hello")}>
               Switch to Login
             </ButtonWithBackground>
             <View style={styles.inputContainer}>
-              <DefaultInput placeholder="Your E-Mail Address" style={styles.input}/>
-              <DefaultInput placeholder="Password" style={styles.input}/>
-              <DefaultInput placeholder="Confirm Password" style={styles.input}/>
+              <DefaultInput
+                placeholder="Your E-Mail Address"
+                style={styles.input}
+              />
+              <View style={styles.passwordContainer}>
+                <View style={styles.passwordWrapper}>
+                  <DefaultInput placeholder="Password" style={styles.input}/>
+                </View>
+                <View style={styles.passwordWrapper}>
+                  <DefaultInput placeholder="Confirm Password" style={styles.input}/>
+                </View>
+              </View>
             </View>
             <ButtonWithBackground color="#29aaf4" onPress={this.loginHandler}>
               Submit
@@ -66,6 +83,14 @@ const styles = StyleSheet.create({
       borderColor: "#bbb"
     },
     heading: {
+
+    },
+    passwordContainer: {
+      flexDirection: Dimensions.get('window').height > 500 ? 'column' : 'row',
+      justifyContent: 'space-between'
+    },
+    passwordWrapper: {
+      width: Dimensions.get('window').height > 500 ? "100%" : "45%" 
     }
   });
 
