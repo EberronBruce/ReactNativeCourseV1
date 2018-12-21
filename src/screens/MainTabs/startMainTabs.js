@@ -42,10 +42,16 @@ import Icon from 'react-native-vector-icons/Ionicons'
           }
         }
       ],
+      tabsStyle: {
+        tabBarSelectedButtonColor: "orange"
+      },
       drawer: {
         left: {
           screen: "awesome-places.SideDrawer"
         }
+      },
+      appStyle: {
+        tabBarSelectedButtonColor: "orange"
       }
     });
   });

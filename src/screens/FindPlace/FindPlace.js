@@ -14,6 +14,10 @@ type Props = {places: Array<Place>, navigator: Object};
 type State = {};
 
 class FindPlaceScreen extends Component<Props, State> {
+  static navigatorStyle = {
+    navBarButtonColor: "orange"
+  }
+
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);

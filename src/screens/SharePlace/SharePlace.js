@@ -23,6 +23,10 @@ type Props = {onAddPlace: Function, navigator: Object};
 type State = {placeName: string};
 
 class SharePlaceScreen extends Component<Props, State> {
+  static navigatorStyle = {
+    navBarButtonColor: "orange"
+  };
+
   state = {
     placeName: ""
   };

@@ -7,7 +7,8 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
-  Platform
+  Platform,
+  Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -15,8 +16,32 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { deletePlace } from '../../store/actions/index.js';
 
 type Props = {selectedPlace: ?Object, onModalClosed: Function, onDeletePlace: Function, navigator: Object};
+type State = {
+  viewMode: string
+};
 
-class PlaceDetail extends Component<Props> {
+class PlaceDetail extends Component<Props, State> {
+  state = {
+    viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape"
+  };
+
+  constructor(props : Props) {
+    super(props);
+    Dimensions.addEventListener( "change", this.updateStyles);
+  }
+
+  componentWillUnmount () {
+    Dimensions.removeEventListener("change", this.updateStyles);
+  }
+
+  updateStyles = (dims: Object) => {
+    this.setState({
+      viewMode:
+      dims.window.height > 500 ? "portrait" : "landscape"
+    });
+  }
+
+
   placeDeletedHandler = () => {
     this.props.onDeletePlace(this.props.selectedPlace?.key);
     this.props.navigator.pop();
@@ -24,9 +49,20 @@ class PlaceDetail extends Component<Props> {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[
+        styles.container,
+        this.state.viewMode === "portrait"
+          ? styles.portraitContainer
+          : styles.landscapeContainer
+      ]}>
+        <View style={styles.subContainer}>
+          <Image
+            source={this.props.selectedPlace?.image}
+            style={styles.placeImage}
+          />
+        </View>
+        <View style={styles.subContainer}>
         <View>
-          <Image source={this.props.selectedPlace?.image} style={styles.placeImage}/>
           <Text style={styles.placeName}>{this.props.selectedPlace?.name}</Text>
         </View>
         <View>
@@ -41,13 +77,21 @@ class PlaceDetail extends Component<Props> {
           </TouchableOpacity>
         </View>
       </View>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    margin: 22
+    margin: 22,
+    flex: 1
+  },
+  portraitContainer: {
+    flexDirection: 'column'
+  },
+  landscapeContainer: {
+    flexDirection: 'row'
   },
   placeImage: {
     width: "100%",
@@ -60,7 +104,11 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     alignItems: "center"
+  },
+  subContainer: {
+    flex: 1
   }
+
 });
 
 const mapDispatchToProps = dispatch => {
