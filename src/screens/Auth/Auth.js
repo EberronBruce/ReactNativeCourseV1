@@ -13,8 +13,9 @@ import startMainTabs from "../MainTabs/startMainTabs.js";
 import DefaultInput from "../../components/UI/DefaultInput/DefaultInput.js";
 import HeadingText from "../../components/UI/HeadingText/HeadingText.js";
 import MainText from "../../components/UI/MainText/MainText.js";
-import ButtonWithBackground from "../../components/UI/ButtonWithBackground/ButtonWithBackground.js"
-import backgroundImage from "../../assets/background.jpg"
+import ButtonWithBackground from "../../components/UI/ButtonWithBackground/ButtonWithBackground.js";
+import backgroundImage from "../../assets/background.jpg";
+import validate from '../../utility/validation.js';
 
 type State = {
   viewMode: string,
@@ -71,13 +72,39 @@ class AuthScreen extends Component<Props, State> {
   };
 
   updateInputState = (key: string, value: string) => {
+    let connectedValue = {};
+    if (this.state.controls[key].validationRules.equalTo) {
+      const equalControl = this.state.controls[key].validationRules.equalTo;
+      const equalValue = this.state.controls[equalControl].value;
+      connectedValue = {
+        ...connectedValue,
+        equalTo: equalValue
+      };
+    }
+    if (key === 'password') {
+      connectedValue = {
+        ...connectedValue,
+        equalTo: value
+      };
+    }
     this.setState(prevState => {
       return {
         controls: {
           ...prevState.controls,
+          confirmPassword: {
+            ...prevState.controls.confirmPassword,
+            valid: key === 'password'
+            ? validate(
+              prevState.controls.confirmPassword.value,
+              prevState.controls.confirmPassword.validationRules,
+              connectedValue
+            )
+            : prevState.controls.confirmPassword.valid
+          },
           [key]: {
             ...prevState.controls[key],
-            value: value
+            value: value,
+            valid: validate(value, prevState.controls[key].validationRules, connectedValue)
           }
         }
       };
