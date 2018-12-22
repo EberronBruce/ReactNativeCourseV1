@@ -10,7 +10,7 @@ import {
   Platform
   } from 'react-native';
 
-type Props = {onPress : Function, children: string, color: string, disabled?: bool};
+type Props = {onPress : Function, children?: any, color: string, disabled?: bool};
 
 const buttonWithBackground = (props: Props) => {
   const content = (
