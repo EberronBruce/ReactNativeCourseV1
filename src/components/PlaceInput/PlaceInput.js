@@ -6,12 +6,14 @@ import { View, TextInput, Button, StyleSheet } from "react-native";
 import DefaultInput from "../UI/DefaultInput/DefaultInput.js";
 
 type State = {  };
-type Props = {placeName: string, onChangeText: Function};
+type Props = {placeData: Object, onChangeText: Function};
 
 const placeInput = (props: Props) =>  (
   <DefaultInput
     placeholder="Place Name"
-    value={props.placeName}
+    value={props.placeData.value}
+    valid={props.placeData.valid}
+    touched={props.placeData.touched}
     onChangeText={props.onChangeText}
     style={styles.input}
   />
