@@ -4,7 +4,7 @@ import { View, Image, Button, StyleSheet, Text, Dimensions } from 'react-native'
 import MapView from "react-native-maps";
 
 type Props = {};
-type State = {focusedLocation: Object}
+type State = {focusedLocation: Object, locationChosen: bool}
 
 class PickLocation extends Component<Props, State> {
   state ={
@@ -16,7 +16,8 @@ class PickLocation extends Component<Props, State> {
         Dimensions.get("window").width /
         Dimensions.get("window").height *
         0.0122
-    }
+    },
+    locationChosen: false
   };
 
   pickLocationHandler = (event: Object) => {
@@ -27,12 +28,19 @@ class PickLocation extends Component<Props, State> {
           ...prevState.focusedLocation,
           latitude: coords.latitude,
           longitude: coords.longitude
-        }
+        },
+        locationChosen: true
       };
     });
   };
 
   render() {
+    let marker = null;
+
+    if (this.state.locationChosen) {
+      marker = <MapView.Marker coordinate={this.state.focusedLocation}/>
+    }
+
     return (
     <View style={styles.container}>
       <MapView
@@ -40,7 +48,9 @@ class PickLocation extends Component<Props, State> {
         region={this.state.focusedLocation}
         style={styles.map}
         onPress={this.pickLocationHandler}
-      />
+      >
+        {marker}
+      </MapView>
       <View style={styles.button}>
         <Button title="Locate Me" onPress={() => alert('Pick Location!')}/>
       </View>
