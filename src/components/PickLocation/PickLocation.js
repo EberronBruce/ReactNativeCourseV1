@@ -6,7 +6,9 @@ import MapView from "react-native-maps";
 type Props = {};
 type State = {focusedLocation: Object, locationChosen: bool}
 
+
 class PickLocation extends Component<Props, State> {
+
   state ={
     focusedLocation: {
       latitude: 37.7900352,
@@ -22,6 +24,11 @@ class PickLocation extends Component<Props, State> {
 
   pickLocationHandler = (event: Object) => {
     const coords = event.nativeEvent.coordinate;
+    this.map.animateToRegion({
+      ...this.state.focusedLocation,
+      latitude: coords.latitude,
+      longitude: coords.longitude
+    });
     this.setState(prevState => {
       return {
         focusedLocation: {
@@ -45,9 +52,9 @@ class PickLocation extends Component<Props, State> {
     <View style={styles.container}>
       <MapView
         initialRegion={this.state.focusedLocation}
-        region={this.state.focusedLocation}
         style={styles.map}
         onPress={this.pickLocationHandler}
+        ref={ref => this.map = ref}
       >
         {marker}
       </MapView>
