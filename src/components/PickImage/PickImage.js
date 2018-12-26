@@ -3,8 +3,8 @@ import React, {Component} from 'react';
 import { View, Image, Button, StyleSheet } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
-type State = {pickedImaged: Object}
-type Props = {};
+type State = {pickedImaged: any}
+type Props = {onImagePicked: Function};
 
 class PickImage extends Component<Props, State> {
   state = {
@@ -21,6 +21,7 @@ class PickImage extends Component<Props, State> {
         this.setState({
           pickedImaged: { uri: res.uri}
         });
+        this.props.onImagePicked({uri: res.uri})
       }
     });
   }
