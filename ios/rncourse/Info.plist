@@ -73,5 +73,11 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You want to share a photo, right?</string>
+	<key>NSCameraUsageDescription</key>
+	<string>You want to take a picture of the place to share, right?</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>You want to save the photo right?</string>
 </dict>
 </plist>
