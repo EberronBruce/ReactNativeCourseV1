@@ -90,13 +90,13 @@ exports.storeImage = functions.https.onRequest((request, response) => {
       console.log(err);
       return response.status(500).json({ error: err });
     });
-    const bucket = gcs.bucket("YOUR_PROJECT_ID.appspot.com");
+    const bucket = gcs.bucket("awesome-places-1545539529697.appspot.com");
     const uuid = UUID();
 
     return bucket.upload(
       "/tmp/uploaded-image.jpg",
       {
-        uploadType: "media",
+        uploadType: "resumable",
         destination: "/places/" + uuid + ".jpg",
         metadata: {
           metadata: {
