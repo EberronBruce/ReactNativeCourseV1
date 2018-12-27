@@ -70,6 +70,9 @@ const cors = require("cors")({ origin: true });
 const fs = require("fs");
 const UUID = require("uuid-v4");
 
+ const os = require("os");
+ const path = require("path");
+
 // const gcconfig = {
 //   projectId: "awesome-places-1545539529697",
 //   keyFilename: "awesome-places.json"
@@ -86,10 +89,14 @@ const UUID = require("uuid-v4");
 exports.storeImage = functions.https.onRequest((request, response) => {
   return cors(request, response, () => {
     const body = JSON.parse(request.body);
-    fs.writeFileSync("/tmp/uploaded-image.jpg", body.image, "base64", err => {
-      console.log(err);
-      return response.status(500).json({ error: err });
-    });
+    // fs.writeFileSync("/tmp/uploaded-image.jpg", body.image, "base64", err => {
+    //   console.log(err);
+    //   return response.status(500).json({ error: err });
+    // });
+    fs.writeFileSync(path.join(os.tmpdir(), "uploaded-image.jpg"), body.image, "base64", err => {
+         console.log(err);
+         return response.status(500).json({ error: err });
+       });
     const bucket = gcs.bucket("awesome-places-1545539529697.appspot.com");
     const uuid = UUID();
 
