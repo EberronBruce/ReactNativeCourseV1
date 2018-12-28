@@ -1,10 +1,10 @@
 /* @flow */
-import { SET_PLACES } from '../actions/actionTypes.js'
+import { SET_PLACES, REMOVE_PLACE } from '../actions/actionTypes.js'
 
 type State = {
   places: Array<Object>
 };
-type Action = { type : string, places: Array<Object>};
+type Action = { type : string, places: Array<Object>, key : string};
 
 const initialState = {
   places: []
@@ -19,13 +19,13 @@ const reducer = (state : State = initialState, action : Action) : State => {
           ...state,
           places: action.places
         };
-      // case DELETE_PLACE:
-      // return {
-      //   ...state,
-      //   places: state.places.filter(place => {
-      //       return place.key !== action.placeKey;
-      //     })
-      // };
+      case REMOVE_PLACE:
+      return {
+        ...state,
+        places: state.places.filter(place => {
+            return place.key !== action.key;
+          })
+      };
 
     default:
       return state;
