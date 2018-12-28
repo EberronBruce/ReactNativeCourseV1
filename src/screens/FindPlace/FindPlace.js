@@ -3,14 +3,15 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
 import { connect } from 'react-redux';
 
-import PlaceList from '../../components/PlaceList/PlaceList.js'
+import PlaceList from '../../components/PlaceList/PlaceList.js';
+import { getPlaces } from "../../store/actions/index.js";
 
 type Place = {
   key: string,
   name: string,
   image: Image
 };
-type Props = {places: Array<Place>, navigator: Object};
+type Props = {places: Array<Place>, navigator: Object, onLoadPlaces: Function};
 type State = {placesLoaded: bool, removeAnim: Animated.Value, placesAnim: Animated.Value};
 
 class FindPlaceScreen extends Component<Props, State> {
@@ -27,6 +28,10 @@ class FindPlaceScreen extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+  }
+
+  componentDidMount() {
+    this.props.onLoadPlaces();
   }
 
   onNavigatorEvent = (event) => {
@@ -138,4 +143,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(FindPlaceScreen);
+const mapDispatchToProps = dispatch => {
+  return {
+    onLoadPlaces: () => dispatch(getPlaces())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FindPlaceScreen);

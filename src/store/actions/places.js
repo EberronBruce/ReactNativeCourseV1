@@ -1,6 +1,6 @@
 /* @flow */
 
-import { ADD_PLACE, DELETE_PLACE } from './actionTypes.js';
+import { SET_PLACES } from './actionTypes.js';
 import { uiStartLoading, uiStopLoading } from './index.js';
 
 export const addPlace = (placeName : string, location: Object, image: Object) => {
@@ -39,6 +39,37 @@ export const addPlace = (placeName : string, location: Object, image: Object) =>
       console.log(parsedRes);
       dispatch(uiStopLoading());
     });
+  };
+};
+
+export const getPlaces = ()  => {
+  return (dispatch : Function) => {
+    fetch("https://awesome-places-1545539529697.firebaseio.com/places.json")
+    .catch(err => {
+        alert("Something went wrong :/");
+        console.log(err);
+    })
+    .then(res => res.json())
+    .then(parsedRes => {
+      const places = [];
+      for (let key in parsedRes) {
+        places.push({
+          ...parsedRes[key],
+          image: {
+            uri: parsedRes[key].image
+          },
+          key: key
+        })
+      }
+      dispatch(setPlaces(places))
+    });
+  };
+};
+
+export const setPlaces = (places: Array<Object>) => {
+  return {
+    type: SET_PLACES,
+    places: places
   };
 };
 

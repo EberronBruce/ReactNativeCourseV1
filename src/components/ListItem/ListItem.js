@@ -8,7 +8,7 @@ type Props = {placeName : string, onItemPressed : Function, placeImage : Image};
 const listItem = (props : Props) => (
   <TouchableOpacity onPress={props.onItemPressed}>
     <View style={styles.listItem}>
-        <Image resizeMode="cover" source={props.placeImage} style={styles.placeImage} />
+      <Image resizeMode="cover" source={props.placeImage} style={styles.placeImage} />
         <Text>{props.placeName}</Text>
     </View>
   </TouchableOpacity>
