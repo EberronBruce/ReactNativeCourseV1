@@ -34,19 +34,32 @@ export const addPlace = (placeName : string, location: Object, image: Object) =>
       alert("Something went wrong, please try again");
       dispatch(uiStopLoading());
     })
-    .then(res => res.json())
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw(new Error());
+      }
+    })
     .then(parsedRes => {
       const placeData = {
         name: placeName,
         location: location,
-        image: parsedRes.imageUrl
+        image: parsedRes.imageUrl,
+        imagePath: parsedRes.imagePath
       };
       return fetch("https://awesome-places-1545539529697.firebaseio.com/places.json?auth=" + authToken, {
         method: "POST",
         body: JSON.stringify(placeData)
       })
     })
-    .then(res => res.json())
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw(new Error());
+      }
+    })
     .then(parsedRes => {
       console.log(parsedRes);
       dispatch(uiStopLoading());
@@ -115,7 +128,13 @@ export const deletePlace = (key: string) => {
           method: "DELETE"
         })
       })
-      .then(res => res.json())
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw(new Error());
+        }
+      })
       .then(parsedRes => {
         console.log("Done!");
       })
