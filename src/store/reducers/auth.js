@@ -1,13 +1,15 @@
 //@flow
-import { AUTH_SET_TOKEN } from "../actions/actionTypes.js";
+import { AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN } from "../actions/actionTypes.js";
 
 type State = {
-  token: ?string
+  token: ?string,
+  expiryDate: ?number
 };
-type Action = { type : string, token : string};
+type Action = { type : string, token : string, expiryDate: number};
 
 const initialState = {
-  token: null
+  token: null,
+  expiryDate: null
 };
 
 const reducer = (state : State = initialState, action : Action) : State => {
@@ -15,7 +17,14 @@ const reducer = (state : State = initialState, action : Action) : State => {
     case AUTH_SET_TOKEN:
       return {
         ...state,
-        token: action.token
+        token: action.token,
+        expiryDate: action.expiryDate
+      };
+    case AUTH_REMOVE_TOKEN:
+      return {
+        ...state,
+        token: null,
+        expiryDate: null
       };
     default:
       return state;
