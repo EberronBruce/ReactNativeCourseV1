@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import { View, Image, Button, StyleSheet, Text, Dimensions } from 'react-native';
 import MapView from "react-native-maps";
 
-type Props = {};
+type Props = {onLocationPick: Function};
 type State = {focusedLocation: Object, locationChosen: bool}
 
 

@@ -16,7 +16,17 @@ import MapView from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { deletePlace } from '../../store/actions/index.js';
 
-type Props = {selectedPlace: ?Object, onModalClosed: Function, onDeletePlace: Function, navigator: Object};
+type Props = {
+  selectedPlace: {
+    location: Object,
+    key: string,
+    image: Object,
+    name: string
+  },
+  onModalClosed: Function,
+  onDeletePlace: Function,
+  navigator: Object
+ };
 type State = {
   viewMode: string
 };
