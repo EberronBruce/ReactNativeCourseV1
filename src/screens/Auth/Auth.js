@@ -22,14 +22,14 @@ import MainText from "../../components/UI/MainText/MainText.js";
 import ButtonWithBackground from "../../components/UI/ButtonWithBackground/ButtonWithBackground.js";
 import backgroundImage from "../../assets/background.jpg";
 import validate from '../../utility/validation.js';
-import {tryAuth} from '../../store/actions/index.js';
+import {tryAuth, authAutoSignIn} from '../../store/actions/index.js';
 
 type State = {
   viewMode: string,
   controls: Object,
   authMode?: string
 };
-type Props = {onTryAuth: Function, isLoading: bool};
+type Props = {onTryAuth: Function, isLoading: bool, onAutoSignIn: Function};
 
 class AuthScreen extends Component<Props, State> {
   state = {
@@ -68,8 +68,12 @@ class AuthScreen extends Component<Props, State> {
     Dimensions.addEventListener( "change", this.updateStyles);
   };
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     Dimensions.removeEventListener("change", this.updateStyles);
+  };
+
+  componentDidMount() {
+    this.props.onAutoSignIn();
   };
 
   switchAuthModeHandler = () => {
@@ -293,7 +297,8 @@ const styles = StyleSheet.create({
 
   const mapDispatchToProps = dispatch => {
     return {
-      onTryAuth: (authData, authMode) => dispatch(tryAuth(authData, authMode))
+      onTryAuth: (authData, authMode) => dispatch(tryAuth(authData, authMode)),
+      onAutoSignIn: () => dispatch(authAutoSignIn())
     };
   };
 
