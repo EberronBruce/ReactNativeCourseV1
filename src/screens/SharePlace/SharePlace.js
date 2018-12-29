@@ -19,9 +19,10 @@ import HeadingText from "../../components/UI/HeadingText/HeadingText.js";
 import PickImage from "../../components/PickImage/PickImage.js";
 import PickLocation from "../../components/PickLocation/PickLocation.js";
 import validate from "../../utility/validation.js";
+import { startAddPlace } from "../../store/actions/index.js";
 
 
-type Props = {onAddPlace: Function, navigator: Object, isLoading: bool};
+type Props = {onAddPlace: Function, navigator: Object, isLoading: bool, placeAdded: bool, onStartAddPlace: Function};
 type State = {controls: Object};
 
 class SharePlaceScreen extends Component<Props, State> {
@@ -61,8 +62,20 @@ class SharePlaceScreen extends Component<Props, State> {
     })
   };
 
+  componentDidUpdate() {
+    if (this.props.placeAdded) {
+      this.props.navigator.switchToTab({tabInded: 0});
+      //this.props.onStartAddPlace();
+    }
+  }
+
   onNavigatorEvent = (event) => {
-    if (event.type == "NavBarButtonPress") {
+    if (event.type === "ScreenChangedEvent"){
+      if (event.id === "willAppear") {
+        this.props.onStartAddPlace();
+      }
+    }
+    if (event.type === "NavBarButtonPress") {
       if (event.id === "sideDrawerToggle") {
         this.props.navigator.toggleDrawer({
             side: "left"
@@ -196,13 +209,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    isLoading: state.ui.isLoading
+    isLoading: state.ui.isLoading,
+    placeAdded: state.places.placeAdded
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddPlace: (placeName, location, image) => dispatch(addPlace(placeName, location, image))
+    onAddPlace: (placeName, location, image) =>
+    dispatch(addPlace(placeName, location, image)),
+    onStartAddPlace: () => dispatch(startAddPlace())
   };
 }
 

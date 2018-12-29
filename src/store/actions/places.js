@@ -1,7 +1,13 @@
 /* @flow */
 
-import { SET_PLACES, REMOVE_PLACE } from './actionTypes.js';
+import { SET_PLACES, REMOVE_PLACE, PLACE_ADDED, START_ADD_PLACE } from './actionTypes.js';
 import { uiStartLoading, uiStopLoading, authGetToken } from './index.js';
+
+export const startAddPlace = () => {
+  return {
+    type: START_ADD_PLACE
+  };
+};
 
 export const addPlace = (placeName : string, location: Object, image: Object) => {
   return (dispatch: Function) => {
@@ -44,12 +50,19 @@ export const addPlace = (placeName : string, location: Object, image: Object) =>
     .then(parsedRes => {
       console.log(parsedRes);
       dispatch(uiStopLoading());
+      dispatch(placeAdded());
     })
     .catch(err => {
       console.log(err);
       alert("Something went wrong, please try again");
       dispatch(uiStopLoading());
     });
+  };
+};
+
+export const placeAdded = () => {
+  return {
+    type: PLACE_ADDED
   };
 };
 

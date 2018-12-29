@@ -1,13 +1,15 @@
 /* @flow */
-import { SET_PLACES, REMOVE_PLACE } from '../actions/actionTypes.js'
+import { SET_PLACES, REMOVE_PLACE, PLACE_ADDED, START_ADD_PLACE } from '../actions/actionTypes.js'
 
 type State = {
-  places: Array<Object>
+  places: Array<Object>,
+  placeAdded: bool
 };
 type Action = { type : string, places: Array<Object>, key : string};
 
 const initialState = {
-  places: []
+  places: [],
+  placeAdded: false
 }
 
 
@@ -26,7 +28,16 @@ const reducer = (state : State = initialState, action : Action) : State => {
             return place.key !== action.key;
           })
       };
-
+      case START_ADD_PLACE:
+      return {
+        ...state,
+        placeAdded: false
+      };
+      case PLACE_ADDED:
+      return {
+        ...state,
+        placeAdded: true
+      }
     default:
       return state;
   }
